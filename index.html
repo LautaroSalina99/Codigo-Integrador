@@ -1,0 +1,31 @@
+<!-- public/index.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventos - Bienal de Escultura</title>
+</head>
+<body>
+    <h1>Bienal de Escultura - Eventos</h1>
+    <div id="events"></div>
+
+    <script>
+        fetch('/api/events')
+            .then(response => response.json())
+            .then(events => {
+                const eventsContainer = document.getElementById('events');
+                events.forEach(event => {
+                    const eventElement = document.createElement('div');
+                    eventElement.innerHTML = `
+                        <h2>${event.nombre}</h2>
+                        <p><strong>Fecha:</strong> ${new Date(event.fecha).toLocaleDateString()}</p>
+                        <p><strong>Lugar:</strong> ${event.lugar}</p>
+                        <p>${event.descripcion}</p>
+                    `;
+                    eventsContainer.appendChild(eventElement);
+                });
+            });
+    </script>
+</body>
+</html>
